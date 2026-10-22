@@ -39,4 +39,10 @@ internal class TicketService
 
         throw new TicketNotFoundException(id);
     }
+
+    public void Resolve(Guid id)
+    {
+        SupportTicket ticket = GetById(id);
+        ticket.Resolve();
+    }
 }

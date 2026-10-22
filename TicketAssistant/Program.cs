@@ -27,5 +27,10 @@ service.GetById(ticket2.Id);
 
 Guid testId = Guid.NewGuid();
 
-service.GetById(testId);
+//service.GetById(testId);
 
+service.Resolve(ticket2.Id);
+Console.WriteLine(ticket2.Status);
+
+service.Resolve(ticket2.Id);
+Console.WriteLine(ticket2.Status);
