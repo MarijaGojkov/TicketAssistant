@@ -23,3 +23,9 @@ Console.WriteLine(service.GetAll().Count);
 all.Clear();
 Console.WriteLine(service.GetAll().Count);
 
+service.GetById(ticket2.Id);
+
+Guid testId = Guid.NewGuid();
+
+service.GetById(testId);
+

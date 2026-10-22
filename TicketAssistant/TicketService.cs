@@ -21,4 +21,22 @@ internal class TicketService
     {
         return new List<SupportTicket>(_supportTickets);
     }
+
+    public SupportTicket GetById(Guid id)
+    {
+        if (id == Guid.Empty)
+        {
+            throw new ArgumentException("Given Id is empty.", nameof(id));
+        }
+
+        foreach (SupportTicket ticket in _supportTickets)
+        {
+            if (ticket.Id == id)
+            {
+                return ticket;
+            }
+        }
+
+        throw new TicketNotFoundException(id);
+    }
 }
