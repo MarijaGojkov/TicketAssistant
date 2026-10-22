@@ -10,10 +10,12 @@ internal class TicketService
         {
             throw new ArgumentNullException(nameof(supportTicket), "Ticket cannot be null.");
         }
+
         if (_supportTickets.Contains(supportTicket))
         {
             throw new InvalidOperationException("Ticket has already been added.");
         }
+
         _supportTickets.Add(supportTicket);
     }
 
@@ -44,5 +46,20 @@ internal class TicketService
     {
         SupportTicket ticket = GetById(id);
         ticket.Resolve();
+    }
+
+    public List<SupportTicket> GetByStatus(Status status)
+    {
+        List<SupportTicket> matchingTickets = [];
+
+        foreach (SupportTicket ticket in _supportTickets)
+        {
+            if (ticket.Status == status)
+            {
+                matchingTickets.Add(ticket);
+            }
+        }
+
+        return matchingTickets;
     }
 }

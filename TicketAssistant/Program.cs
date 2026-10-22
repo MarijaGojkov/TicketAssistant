@@ -32,5 +32,10 @@ Guid testId = Guid.NewGuid();
 service.Resolve(ticket2.Id);
 Console.WriteLine(ticket2.Status);
 
-service.Resolve(ticket2.Id);
 Console.WriteLine(ticket2.Status);
+
+List<SupportTicket> resolved = service.GetByStatus(Status.Resolved);
+Console.WriteLine(resolved.Count());
+
+List<SupportTicket> pending = service.GetByStatus(Status.Pending);
+Console.WriteLine(pending.Count());
