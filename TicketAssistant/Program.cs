@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using TicketAssistant;
+﻿using TicketAssistant;
 
 SupportTicket ticket1 = new SupportTicket("Marija", "Can't proceed payment", Category.Payment, Priority.High);
 SupportTicket ticket2 = new SupportTicket("Dusan", "Can't cancel the appointment", Category.Other, Priority.High);
@@ -14,28 +13,31 @@ service.Add(ticket3);
 service.Add(ticket4);
 service.Add(ticket5);
 
-
-ticket1.Resolve();
-ticket3.Resolve();
-
 List<SupportTicket> all = service.GetAll();
-Console.WriteLine(service.GetAll().Count);
+Console.WriteLine($"Before clear. Number of tickets: {service.GetAll().Count}");
 all.Clear();
-Console.WriteLine(service.GetAll().Count);
-
-service.GetById(ticket2.Id);
+Console.WriteLine($"After clear. Number of tickets: {service.GetAll().Count}");
 
 Guid testId = Guid.NewGuid();
-
 //service.GetById(testId);
 
 service.Resolve(ticket2.Id);
-Console.WriteLine(ticket2.Status);
-
-Console.WriteLine(ticket2.Status);
+Console.WriteLine($"Ticket 2 status: {ticket2.Status}");
 
 List<SupportTicket> resolved = service.GetByStatus(Status.Resolved);
-Console.WriteLine(resolved.Count());
+Console.WriteLine($"Resolved: {resolved.Count}");
+
+service.Resolve(ticket1.Id);
+service.Resolve(ticket3.Id);
+service.Resolve(ticket4.Id);
+service.Resolve(ticket5.Id);
 
 List<SupportTicket> pending = service.GetByStatus(Status.Pending);
-Console.WriteLine(pending.Count());
+if (pending.Count == 0)
+{
+    Console.WriteLine("No tickets found.");
+}
+else
+{
+    Console.WriteLine($"Pending: {pending.Count}");
+}
