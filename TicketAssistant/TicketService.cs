@@ -52,4 +52,9 @@ internal class TicketService
     {
         return _supportTickets.Where(t => t.Status == status).ToList();
     }
+
+    public List<SupportTicket> GetUnresolvedByPriority()
+    {
+        return _supportTickets.Where(t => t.Status != Status.Resolved).OrderBy(t => t.Priority).ToList();
+    }
 }
