@@ -14,7 +14,7 @@ internal class SupportTicket
     {
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new ArgumentException("Description is needed.");
+            throw new ArgumentException("Description is needed.", nameof(description));
         }
 
         Id = Guid.NewGuid();
@@ -28,9 +28,11 @@ internal class SupportTicket
 
     public void Resolve()
     {
-        if (Status != Status.Resolved)
+        if (Status == Status.Resolved)
         {
-            Status = Status.Resolved;
+            throw new InvalidOperationException("This ticket is already resolved.");
         }
+
+        Status = Status.Resolved;
     }
 }
