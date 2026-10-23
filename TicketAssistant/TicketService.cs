@@ -11,6 +11,7 @@ internal class TicketService
             throw new ArgumentNullException(nameof(supportTicket), "Ticket cannot be null.");
         }
 
+        // TODO: check by Id instead of reference once tickets come from a database (if (_supportTickets.Any(t => t.Id == supportTicket.Id)))
         if (_supportTickets.Contains(supportTicket))
         {
             throw new InvalidOperationException("Ticket has already been added.");
@@ -31,15 +32,14 @@ internal class TicketService
             throw new ArgumentException("Given Id is empty.", nameof(id));
         }
 
-        foreach (SupportTicket ticket in _supportTickets)
+        SupportTicket? ticket = _supportTickets.FirstOrDefault(t => t.Id == id);
+
+        if (ticket == null)
         {
-            if (ticket.Id == id)
-            {
-                return ticket;
-            }
+            throw new TicketNotFoundException(id);
         }
 
-        throw new TicketNotFoundException(id);
+        return ticket;
     }
 
     public void Resolve(Guid id)
@@ -50,16 +50,6 @@ internal class TicketService
 
     public List<SupportTicket> GetByStatus(Status status)
     {
-        List<SupportTicket> matchingTickets = [];
-
-        foreach (SupportTicket ticket in _supportTickets)
-        {
-            if (ticket.Status == status)
-            {
-                matchingTickets.Add(ticket);
-            }
-        }
-
-        return matchingTickets;
+        return _supportTickets.Where(t => t.Status == status).ToList();
     }
 }
