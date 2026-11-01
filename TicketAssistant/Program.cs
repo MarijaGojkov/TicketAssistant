@@ -45,3 +45,14 @@ else
 {
     Console.WriteLine($"Pending: {pending.Count}");
 }
+
+TodoClient todoClient = new TodoClient();
+Todo? todo = await todoClient.GetTodoAsync(4);
+if (todo == null)
+{
+    Console.WriteLine("Todo not found.");
+}
+else
+{
+    Console.WriteLine($"Title: {todo.Title}, Completed: {todo.Completed}");
+}
