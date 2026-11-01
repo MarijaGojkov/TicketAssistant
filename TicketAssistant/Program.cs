@@ -1,4 +1,5 @@
 ﻿using TicketAssistant;
+using System.Net.Http.Json;
 
 SupportTicket ticket1 = new SupportTicket("Marija", "Can't proceed payment", Category.Payment, Priority.High);
 SupportTicket ticket2 = new SupportTicket("Dusan", "Can't cancel the appointment", Category.Other, Priority.High);
@@ -45,3 +46,14 @@ else
 {
     Console.WriteLine($"Pending: {pending.Count}");
 }
+
+HttpClient client = new HttpClient();
+string json = await client.GetStringAsync("https://jsonplaceholder.typicode.com/todos/4");
+Console.WriteLine(json);
+
+HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/todos/4");
+Console.WriteLine($"Status: {(int)response.StatusCode}");
+
+HttpResponseMessage todoResponse = await client.GetAsync("https://jsonplaceholder.typicode.com/todos/4");
+Todo? todo = await todoResponse.Content.ReadFromJsonAsync<Todo>();
+Console.WriteLine($"Title: {todo?.Title}, Completed: {todo?.Completed}");
